@@ -1,0 +1,28 @@
+a small http server to share files.
+Forked from webfs:
+http://linux.bytesex.org/misc/webfs.html
+
+diff from webfs:
+without CGI
+without SSL|TLS
+without IPv6
+without log
+without html handling
+default on PORT 8000
+defaultly multi thread
+default run in forground(stop server by Ctrl+c)
+automaticly print ip addr
+
+usage: gx [ options ]
+
+Options:
+  -h       print this text
+  -d       run in daemon mode                  [gx]
+  -p port  use tcp-port >port<                 [off]
+  -x user:pass  password protect the exported
+           files (basic authentication)
+
+
+INSTALL:
+in a unix shell:
+make

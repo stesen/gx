@@ -1,0 +1,9 @@
+Small changes
+--This line, and those below, will be ignored--
+
+M    response.c
+M    ls.c
+M    main.c
+M    mime.c
+M    request.c
+M    httpd.h
