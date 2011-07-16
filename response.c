@@ -7,7 +7,10 @@
 #include <limits.h>
 #include <inttypes.h>
 #include <sys/socket.h>
+
+#if defined(linux)
 #include <sys/sendfile.h>
+#endif
 
 #include "httpd.h"
 
@@ -23,6 +26,23 @@ static inline size_t off_to_size(off_t off_bytes)
     return off_bytes;
 }
 
+#if defined(__CYGWIN32)
+ssize_t sendfile(int out, int in, off_t *offset, size_t bytes)
+{
+	  char buff[4096];
+	  int len, sum = 0;
+	  if (lseek(in, *offset, SEEK_SET)) {
+	  	return -1;
+	  }
+	  
+	  while((len = read(in, buff, sizeof(buff))) >0) {
+	  	send(out, buff, len ,0);
+	  	sum += len;
+	  }
+	  
+	  return sum;
+}
+#endif
 
 static ssize_t xsendfile(int out, int in, off_t offset, off_t off_bytes)
 {

@@ -35,7 +35,9 @@ char time_buf[64];
 pthread_t *threads;
 static int termsig, got_sighup;
 
+#if defined(linux)
 int host_info(void);
+#endif
 
 static void catchsig(int sig)
 {
@@ -74,6 +76,7 @@ static void usage(char *name)
     exit(1);
 }
 
+#if defined(linux)
 int host_info(void)
 {
     register int fd, intrface;
@@ -124,6 +127,7 @@ int host_info(void)
     close (fd);
     return 0;
 }
+#endif
 
 static void *mainloop(void *thread_arg)
 {
@@ -487,9 +491,11 @@ int main(int argc, char *argv[])
 
     init_quote();
     printf("gx start!\n\n");
+#if defined(linux)
     printf("###############################\n");
     printf("HOST INFO:\n");
     host_info();
+#endif
     printf("###############################\n");
     printf("SERVER INFO:\n");
     /* setup signal handler */
